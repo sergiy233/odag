@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleStore — Аксесуари</title>
+    <style>
+        :root { 
+            --primary: #2c3e50; /* Темно-синій */
+            --accent: #d35400;  /* Теракотовий */
+            --bg: #f8f9fa;
+        }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: #333; }
+        
+        /* Шапка */
+        header { background: white; padding: 15px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5em; font-weight: bold; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .nav-icons a { margin-left: 15px; text-decoration: none; font-size: 1.2em; position: relative; }
+        .badge { background: var(--accent); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7em; position: absolute; top: -8px; right: -8px; }
+
+        /* Навігація категорій */
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 15px 20px; background: white; border-bottom: 1px solid #eee; }
+        .cat-btn { padding: 8px 20px; border: 1px solid #ddd; border-radius: 20px; text-decoration: none; color: #555; white-space: nowrap; transition: 0.3s; }
+        .cat-btn:hover, .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Сітка товарів */
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        
+        /* Картка товару */
+        .card { background: white; border-radius: 10px; overflow: hidden; position: relative; transition: 0.3s; border: 1px solid #eee; }
+        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: translateY(-5px); }
+        
+        .card-img-wrap { position: relative; height: 280px; background: #f0f0f0; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .wishlist-btn { position: absolute; top: 10px; right: 10px; background: white; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 1.2em; transition: 0.2s; }
+        .wishlist-btn.active { color: red; }
+
+        .card-body { padding: 15px; text-align: center; }
+        .price-box { margin: 10px 0; font-size: 1.2em; font-weight: bold; color: var(--primary); }
+        .old-price { text-decoration: line-through; color: #999; font-size: 0.8em; margin-right: 8px; }
+
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; margin-top: 5px; transition: 0.3s; }
+        .btn-cart { background: var(--primary); color: white; }
+        .btn-cart:hover { background: #1a252f; }
+        .btn-oneclick { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-oneclick:hover { background: #f4f4f4; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">StyleStore</div>
+    <div class="nav-icons">
+        <a href="#">❤️ <span class="badge" id="wishCount">0</span></a>
+        <a href="cart.html">🛒 <span class="badge" id="cartCount">0</span></a>
+    </div>
+</header>
+
+<div class="categories">
+    <a href="#" class="cat-btn active">Всі</a>
+    <a href="#" class="cat-btn">Сумки</a>
+    <a href="#" class="cat-btn">Окуляри</a>
+    <a href="#" class="cat-btn">Годинники</a>
+    <a href="#" class="cat-btn">Ремені</a>
+</div>
+
+<div class="container">
+    <h2 style="margin-bottom: 20px;">Популярні товари</h2>
+    <div class="grid">
+        
+        <div class="card">
+            <div class="card-img-wrap">
+                <div class="wishlist-btn" onclick="toggleWish(this)">♡</div>
+                <img src="images/bag.jpg" alt="Сумка">
+            </div>
+            <div class="card-body">
+                <h3>Шкіряна сумка Premium</h3>
+                <div class="price-box">2 500 грн</div>
+                <button class="btn btn-cart" onclick="addToCart('Шкіряна сумка', 2500, 'images/bag.jpg')">В кошик</button>
+                <button class="btn btn-oneclick" onclick="oneClickBuy('Шкіряна сумка')">Купити в 1 клік</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img-wrap">
+                <span style="position:absolute; top:10px; left:10px; background:#e74c3c; color:white; padding:3px 8px; border-radius:4px; font-size:0.8em;">SALE</span>
+                <div class="wishlist-btn" onclick="toggleWish(this)">♡</div>
+                <img src="images/glasses.jpg" alt="Окуляри">
+            </div>
+            <div class="card-body">
+                <h3>Окуляри Aviator</h3>
+                <div class="price-box"><span class="old-price">1200 грн</span> 899 грн</div>
+                <button class="btn btn-cart" onclick="addToCart('Окуляри Aviator', 899, 'images/glasses.jpg')">В кошик</button>
+                <button class="btn btn-oneclick" onclick="oneClickBuy('Окуляри Aviator')">Купити в 1 клік</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img-wrap">
+                <div class="wishlist-btn" onclick="toggleWish(this)">♡</div>
+                <img src="images/watch.jpg" alt="Годинник">
+            </div>
+            <div class="card-body">
+                <h3>Годинник Classic Black</h3>
+                <div class="price-box">4 200 грн</div>
+                <button class="btn btn-cart" onclick="addToCart('Годинник Classic', 4200, 'images/watch.jpg')">В кошик</button>
+                <button class="btn btn-oneclick" onclick="oneClickBuy('Годинник Classic')">Купити в 1 клік</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Логіка Кошика
+    function addToCart(name, price, img) {
+        let cart = JSON.parse(localStorage.getItem('styleCart')) || [];
+        cart.push({name, price, img, qty: 1});
+        localStorage.setItem('styleCart', JSON.stringify(cart));
+        updateCounts();
+        
+        // Анімація кнопки
+        let btn = event.target;
+        let oldText = btn.innerText;
+        btn.innerText = "✓ Додано";
+        btn.style.background = "#27ae60";
+        setTimeout(() => {
+            btn.innerText = oldText;
+            btn.style.background = "";
+        }, 1500);
+    }
+
+    // Логіка Обраного
+    function toggleWish(btn) {
+        btn.classList.toggle('active');
+        btn.innerText = btn.classList.contains('active') ? '❤' : '♡';
+        // Тут можна додати збереження в localStorage
+        let current = parseInt(document.getElementById('wishCount').innerText);
+        document.getElementById('wishCount').innerText = btn.classList.contains('active') ? current + 1 : current - 1;
+    }
+
+    // Логіка Купівлі в 1 клік
+    function oneClickBuy(productName) {
+        let phone = prompt("Введіть ваш номер телефону для швидкого замовлення " + productName + ":");
+        if(phone) {
+            alert("Дякуємо! Менеджер зателефонує вам на номер " + phone + " протягом 10 хвилин.");
+        }
+    }
+
+    function updateCounts() {
+        let cart = JSON.parse(localStorage.getItem('styleCart')) || [];
+        document.getElementById('cartCount').innerText = cart.length;
+    }
+
+    window.onload = updateCounts;
+</script>
+
+</body>
+</html>
